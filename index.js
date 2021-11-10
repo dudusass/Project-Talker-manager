@@ -5,6 +5,7 @@ const login = require('./.trybe/middlewares/errLogin');
 const createTalker = require('./.trybe/controllers/createTalker');
 const editTalker = require('./.trybe/controllers/editTalker');
 const deleteTalker = require('./.trybe/controllers/deleteTalker');
+const searchTalker = require('./.trybe/controllers/searchTalker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,15 +18,12 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
-app.post('/talker', createTalker);
-
-app.use(talker);
-
-app.put('/talker/:id', editTalker);
-
-app.delete('/talker/:id', deleteTalker);
-
+app.get('/talker/search', searchTalker);
 app.use(login);
+app.use(talker);
+app.post('/talker', createTalker);
+app.put('/talker/:id', editTalker);
+app.delete('/talker/:id', deleteTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
